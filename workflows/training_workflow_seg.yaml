@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: attribute-recommendation-u0003
+  annotations:
+    scenarios.ai.sap.com/description: "Attribute recommendation train"
+    scenarios.ai.sap.com/name: "attribute-recommendation-scenario"
+    executables.ai.sap.com/description: "Attribute recommendation training executable"
+    executables.ai.sap.com/name: "attribute-recommendation-exec"
+    artifacts.ai.sap.com/image-data.kind: "dataset"
+    artifacts.ai.sap.com/image-model-tutorial.kind: "model"
+  labels:
+    scenarios.ai.sap.com/id: "attribute-recommendation"
+    executables.ai.sap.com/id: "attribute-recommendation"
+    ai.sap.com/version: "1.0.0"
+spec:
+  imagePullSecrets:
+    - name: docker-registry-u0003
+  entrypoint: attribute-recommendation-training
+  templates:
+    - name: attribute-recommendation-training
+      metadata:
+        labels:
+          ai.sap.com/resourcePlan: infer.s
+      inputs:
+        artifacts:
+          - name: product-data
+            path: /app/data/
+      outputs:
+        artifacts:
+          - name: attribute-recommendation-model
+            path: /app/outputs
+            globalName: attribute-recommendation-model
+            archive:
+              none: {}
+      container:
+        image: "docker.io/kemperd/attribute-recommendation-train:0.0.1"
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c"]
+        args:
+          - >
+            set -e && echo "---Start Training---" && python /app/src/train.py && ls -lR /app/outputs && echo "---End Training---"

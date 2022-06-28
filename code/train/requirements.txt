@@ -1,0 +1,8 @@
+pandas==1.4.2
+torch==1.11.0
+nlp==0.4.0
+transformers==4.20.0
+sentencepiece==0.1.96
+pytorch-lightning==1.5.10
+scikit-learn == 1.1.1
+ai-core-sdk == 1.12.0
