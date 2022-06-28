@@ -391,7 +391,6 @@ class TrainSKInterface:
             gpus=NUM_GPUS,
             precision=32,
             log_every_n_steps=1,
-            #num_sanity_val_steps=0,     # to prevent hangup on Windows
         )
 
         logging.info('Starting model fit')
