@@ -310,7 +310,6 @@ class TrainSKInterface:
     
     def read_dataset(self) -> None:    
         f_train_test = self.files_path + '/' + 'products_train_test.csv'
-        #df = pd.read_csv(f_train_test, sep=';', names=['PRODUCT', 'ATTR_NAME', 'ATTR_VAL'])
         df = pd.read_csv(f_train_test, sep=';')
 
         df_attr_brandname = df[df['ATTR_NAME'] == 'Brand Name']
